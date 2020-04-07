@@ -10,6 +10,9 @@
 		18C0B6AB243D0CC1006FEE3A /* GameDatabaseManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18C0B6A1243D0CC1006FEE3A /* GameDatabaseManager.framework */; };
 		18C0B6B0243D0CC1006FEE3A /* GameDatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0B6AF243D0CC1006FEE3A /* GameDatabaseManagerTests.swift */; };
 		18C0B6B2243D0CC1006FEE3A /* GameDatabaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 18C0B6A4243D0CC1006FEE3A /* GameDatabaseManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		18C0B6BD243D0DB8006FEE3A /* GameDatabaseDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18C0B6BB243D0DB8006FEE3A /* GameDatabaseDataModel.xcdatamodeld */; };
+		18C0B6C1243D0FA7006FEE3A /* GDMCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0B6C0243D0FA7006FEE3A /* GDMCoreDataManager.swift */; };
+		18C0B6C3243D10DC006FEE3A /* GDMCoreDataManager+Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0B6C2243D10DC006FEE3A /* GDMCoreDataManager+Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +32,9 @@
 		18C0B6AA243D0CC1006FEE3A /* GameDatabaseManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameDatabaseManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18C0B6AF243D0CC1006FEE3A /* GameDatabaseManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDatabaseManagerTests.swift; sourceTree = "<group>"; };
 		18C0B6B1243D0CC1006FEE3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18C0B6BC243D0DB8006FEE3A /* GameDatabaseDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GameDatabaseDataModel.xcdatamodel; sourceTree = "<group>"; };
+		18C0B6C0243D0FA7006FEE3A /* GDMCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDMCoreDataManager.swift; sourceTree = "<group>"; };
+		18C0B6C2243D10DC006FEE3A /* GDMCoreDataManager+Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GDMCoreDataManager+Player.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +78,10 @@
 			isa = PBXGroup;
 			children = (
 				18C0B6A4243D0CC1006FEE3A /* GameDatabaseManager.h */,
+				18C0B6C0243D0FA7006FEE3A /* GDMCoreDataManager.swift */,
+				18C0B6C2243D10DC006FEE3A /* GDMCoreDataManager+Player.swift */,
 				18C0B6A5243D0CC1006FEE3A /* Info.plist */,
+				18C0B6BB243D0DB8006FEE3A /* GameDatabaseDataModel.xcdatamodeld */,
 			);
 			path = GameDatabaseManager;
 			sourceTree = "<group>";
@@ -148,6 +157,7 @@
 				TargetAttributes = {
 					18C0B6A0243D0CC1006FEE3A = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
 					};
 					18C0B6A9243D0CC1006FEE3A = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -195,6 +205,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18C0B6BD243D0DB8006FEE3A /* GameDatabaseDataModel.xcdatamodeld in Sources */,
+				18C0B6C3243D10DC006FEE3A /* GDMCoreDataManager+Player.swift in Sources */,
+				18C0B6C1243D0FA7006FEE3A /* GDMCoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,8 +353,11 @@
 		18C0B6B6243D0CC1006FEE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8ST3347N8Z;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -355,6 +371,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.oscar.GameDatabaseManager;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -363,8 +380,11 @@
 		18C0B6B7243D0CC1006FEE3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8ST3347N8Z;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -386,7 +406,9 @@
 		18C0B6B9243D0CC1006FEE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8ST3347N8Z;
 				INFOPLIST_FILE = GameDatabaseManagerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -403,7 +425,9 @@
 		18C0B6BA243D0CC1006FEE3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8ST3347N8Z;
 				INFOPLIST_FILE = GameDatabaseManagerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -448,6 +472,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		18C0B6BB243D0DB8006FEE3A /* GameDatabaseDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				18C0B6BC243D0DB8006FEE3A /* GameDatabaseDataModel.xcdatamodel */,
+			);
+			currentVersion = 18C0B6BC243D0DB8006FEE3A /* GameDatabaseDataModel.xcdatamodel */;
+			path = GameDatabaseDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 18C0B698243D0CC1006FEE3A /* Project object */;
 }
