@@ -19,7 +19,10 @@ class GameDatabaseManagerTests : XCTestCase {
     override func tearDown() {
         cdManager.deleteAllPlayers()
     }
+}
 
+// MARK: - Player tests
+extension GameDatabaseManagerTests {
     func testCreatePlayer() {
         let result = cdManager.createPlayer(username: "Player1")
         
