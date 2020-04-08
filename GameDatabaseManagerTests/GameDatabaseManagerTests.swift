@@ -10,15 +10,14 @@ import XCTest
 @testable import GameDatabaseManager
 
 class GameDatabaseManagerTests : XCTestCase {
-    var cdManager : GDMCoreDataManager!
+    var cdManager = GDMCoreDataManager.init(momd: "GameDatabaseDataModel")
     
     override func setUp() {
-        cdManager = GDMCoreDataManager.init(momd: "GameDatabaseDataModel")
+
     }
     
     override func tearDown() {
         cdManager.deleteAllPlayers()
-        cdManager = nil
     }
 
     func testCreatePlayer() {

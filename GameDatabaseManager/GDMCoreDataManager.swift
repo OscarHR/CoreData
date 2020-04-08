@@ -14,24 +14,33 @@ class GDMCoreDataManager {
     init(momd: String) {
         self.momd = momd
     }
-    lazy var persistentContainer: NSPersistentContainer = {
-        guard let modelURL = Bundle(for: type(of: self)).url(forResource: momd, withExtension:"momd") else {
-                fatalError("Error loading model from bundle")
-        }
+    
+    private static var container : NSPersistentContainer?
 
-        guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
-            fatalError("Error initializing mom from: \(modelURL)")
-        }
-        
-        print("Database loading")
-        let container = NSPersistentContainer(name: momd, managedObjectModel: mom)
-        
-        container.loadPersistentStores { (desc, error) in
-            if let error = error {
-                fatalError("Error loading database: \(error.localizedDescription)")
+    lazy var persistentContainer : NSPersistentContainer = {
+        guard let container = GDMCoreDataManager.container  else {
+            guard let modelURL = Bundle(for: type(of: self)).url(forResource: momd, withExtension:"momd") else {
+                    fatalError("Error loading model from bundle")
             }
+
+            guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
+                fatalError("Error initializing mom from: \(modelURL)")
+            }
+            
+            print("Database loading")
+            let container = NSPersistentContainer(name: momd, managedObjectModel: mom)
+            
+            container.loadPersistentStores { (desc, error) in
+                if let error = error {
+                    fatalError("Error loading database: \(error.localizedDescription)")
+                }
+            }
+            print("Database loaded")
+            
+            GDMCoreDataManager.container = container
+            return container
         }
-        print("Database loaded")
+        
         return container
     }()
 }
