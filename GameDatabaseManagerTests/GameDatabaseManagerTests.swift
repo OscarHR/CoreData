@@ -18,6 +18,7 @@ class GameDatabaseManagerTests : XCTestCase {
     
     override func tearDown() {
         cdManager.deleteAllPlayers()
+        cdManager.deleteAllGames()
     }
 }
 
@@ -79,9 +80,53 @@ extension GameDatabaseManagerTests {
     }
 }
 
+// MARK: - Games tests
+extension GameDatabaseManagerTests {
+    func testCreateGame() {
+        let result = cdManager.createGame(named: "Zelda")
+        
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result?.name ?? "", "Zelda")
+    }
+    
+    func testFetchGameById() {
+        let game = cdManager.createGame(named: "Darkest Dungeon")!
+        
+        let result = cdManager.fetchGameBy(id: game.id!)!
+        
+        XCTAssertEqual(game.id!, result.id!)
+    }
+    
+    func testFetchGameByName() {
+        let game = cdManager.createGame(named: "Halo")!
+        let result = cdManager.fetchGamesBy(name: "Halo").first!
+        
+        XCTAssertEqual(game.name!, result.name!)
+    }
+    
+    func testDeleteAllGames() {
+        createGame(withName: "Zelda")
+        createGame(withName: "Darkest Dungeon")
+        createGame(withName: "Halo")
+
+        var games = cdManager.fetchAllGames()
+               
+        XCTAssertEqual(games.count, 3)
+        
+        cdManager.deleteAllGames()
+        games = cdManager.fetchAllGames()
+        
+        XCTAssertEqual(games.count, 0)
+    }
+}
+
 // MARK: - Utilities
 extension GameDatabaseManagerTests {
     func createPlayer(withName name: String) {
         _ = cdManager.createPlayer(username: name)!
+    }
+    
+    func createGame(withName name: String) {
+        _ = cdManager.createGame(named: name)
     }
 }
