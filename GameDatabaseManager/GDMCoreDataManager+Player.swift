@@ -9,10 +9,9 @@
 import Foundation
 import CoreData
 
-typealias PlayerResult = (error: Error?, player: Player?)
-
 extension GDMCoreDataManager {
-    func createPlayer(username: String) -> PlayerResult {
+    // MARK: - Insert
+    func createPlayer(username: String) -> Player? {
         let context = persistentContainer.viewContext
         let player = Player(context: context)
         player.id = UUID()
@@ -20,10 +19,48 @@ extension GDMCoreDataManager {
         
         do {
             try context.save()
-            return (nil, player)
+            return player
         } catch {
             print("Error creating player: \(error.localizedDescription)")
-            return (error, nil)
+            return nil
+        }
+    }
+    
+    // MARK: - Select
+    func fetchPlayer(by id: UUID) -> Player? {
+        let predicate = NSPredicate(format: "id == %@", id.uuidString)
+        let result = performPlayerFetch(withPredicate: predicate)
+        
+        return result.first
+    }
+    
+    func fetchAllPlayers() -> [Player] {
+        return performPlayerFetch(withPredicate: nil)
+    }
+    
+    func performPlayerFetch(withPredicate predicate: NSPredicate?) -> [Player] {
+        let fetchRequest : NSFetchRequest<Player> = Player.fetchRequest()
+        fetchRequest.predicate = predicate
+        do {
+            let result = try persistentContainer.viewContext.fetch(fetchRequest)
+            return result
+        } catch {
+            print("Error fetching player: \(error.localizedDescription)")
+            return [Player]()
+        }
+    }
+    
+    // MARK: - Delete
+    func deleteAllPlayers() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Player")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        deleteRequest.resultType = .resultTypeCount
+
+        do {
+            let result = try persistentContainer.viewContext.execute(deleteRequest) as! NSBatchDeleteResult
+            print("Deleted no. of records: \(String(describing: result.result))")
+        } catch {
+            print("Error deleting all players")
         }
     }
 }

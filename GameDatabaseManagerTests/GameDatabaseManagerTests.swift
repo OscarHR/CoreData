@@ -16,10 +16,49 @@ class GameDatabaseManagerTests : XCTestCase {
         cdManager = GDMCoreDataManager.init(momd: "GameDatabaseDataModel")
     }
     
+    override func tearDown() {
+        cdManager.deleteAllPlayers()
+        cdManager = nil
+    }
 
     func testCreatePlayer() {
-        let result = cdManager.createPlayer(username: "Redscool")
+        let result = cdManager.createPlayer(username: "Player1")
         
-        XCTAssertNotNil(result.player)
+        XCTAssertNotNil(result)
+    }
+    
+    func testFetchPlayer() {
+        let player = cdManager.createPlayer(username: "Player1")!
+        
+        let result = cdManager.fetchPlayer(by: player.id!)
+        
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result!.id, player.id)
+    }
+    
+    func testFetchAllPlayers() {
+        let players = cdManager.fetchAllPlayers()
+        
+        XCTAssertEqual(players.count, 0)
+    }
+    
+    func testDeleteAllPlayers() {
+        createPlayer(withName: "Player1")
+        createPlayer(withName: "Player2")
+        createPlayer(withName: "Player3")
+
+        var players = cdManager.fetchAllPlayers()
+               
+        XCTAssertEqual(players.count, 3)
+        cdManager.deleteAllPlayers()
+        players = cdManager.fetchAllPlayers()
+        XCTAssertEqual(players.count, 0)
+    }
+}
+
+// MARK: - Utilities
+extension GameDatabaseManagerTests {
+    func createPlayer(withName name: String) {
+        _ = cdManager.createPlayer(username: name)!
     }
 }
