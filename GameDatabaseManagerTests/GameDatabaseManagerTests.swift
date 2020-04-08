@@ -27,7 +27,7 @@ class GameDatabaseManagerTests : XCTestCase {
         XCTAssertNotNil(result)
     }
     
-    func testFetchPlayer() {
+    func testFetchPlayerById() {
         let player = cdManager.createPlayer(username: "Player1")!
         
         let result = cdManager.fetchPlayer(by: player.id!)
@@ -36,10 +36,29 @@ class GameDatabaseManagerTests : XCTestCase {
         XCTAssertEqual(result!.id, player.id)
     }
     
+    func testFetchPlayerByUsername() {
+        let player = cdManager.createPlayer(username: "Player1")!
+        
+        let result = cdManager.fetchPlayers(by: "Player1")
+        
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.first!.username, player.username)
+    }
+    
     func testFetchAllPlayers() {
-        let players = cdManager.fetchAllPlayers()
+        var players = cdManager.fetchAllPlayers()
         
         XCTAssertEqual(players.count, 0)
+        
+        createPlayer(withName: "Player1")
+        players = cdManager.fetchAllPlayers()
+        
+        XCTAssertEqual(players.count, 1)
+        
+        createPlayer(withName: "Player2")
+        players = cdManager.fetchAllPlayers()
+        
+        XCTAssertEqual(players.count, 2)
     }
     
     func testDeleteAllPlayers() {
@@ -50,8 +69,10 @@ class GameDatabaseManagerTests : XCTestCase {
         var players = cdManager.fetchAllPlayers()
                
         XCTAssertEqual(players.count, 3)
+        
         cdManager.deleteAllPlayers()
         players = cdManager.fetchAllPlayers()
+        
         XCTAssertEqual(players.count, 0)
     }
 }

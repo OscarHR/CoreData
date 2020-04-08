@@ -34,6 +34,13 @@ extension GDMCoreDataManager {
         return result.first
     }
     
+    func fetchPlayers(by username: String) -> [Player] {
+        let predicate = NSPredicate(format: "username == %@", username)
+        let result = performPlayerFetch(withPredicate: predicate)
+        
+        return result
+    }
+    
     func fetchAllPlayers() -> [Player] {
         return performPlayerFetch(withPredicate: nil)
     }
